@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Algoritma Dasar - Berpikir Logis SD Kelas 6</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .flowchart-node {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .flowchart-node:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased selection:bg-sky-200">
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Title -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 text-xs font-semibold bg-sky-100 text-sky-700 rounded-full mb-0.5">SD Kelas 6</span>
+                        <h1 class="text-lg sm:text-xl font-bold bg-gradient-to-r from-slate-900 via-sky-900 to-blue-800 bg-clip-text text-transparent">
+                            LMS Algoritma Dasar 
+                            <p></p> By : Idil adha Muslimin Hilal, S.Pd <p/>
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs (Desktop) -->
+                <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200">
+                    <button id="nav-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-white text-sky-700 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/></svg>
+                        Menu Utama
+                    </button>
+                    <button id="nav-materi" onclick="switchTab('materi')" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        Materi
+                    </button>
+                    <button id="nav-evaluasi" onclick="switchTab('evaluasi')" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                        Evaluasi
+                    </button>
+                    <button id="nav-admin" onclick="switchTab('admin')" class="nav-btn px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        Portal Guru
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-xl text-slate-600 hover:bg-slate-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4 pt-2 border-t border-slate-100 space-y-1">
+                <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full px-4 py-2.5 rounded-xl text-left text-sm font-semibold bg-sky-50 text-sky-700 flex items-center gap-3">
+                    🏠 Menu Utama
+                </button>
+                <button onclick="switchTab('materi'); toggleMobileMenu()" class="w-full px-4 py-2.5 rounded-xl text-left text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center gap-3">
+                    📖 Materi Pembelajaran
+                </button>
+                <button onclick="switchTab('evaluasi'); toggleMobileMenu()" class="w-full px-4 py-2.5 rounded-xl text-left text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center gap-3">
+                    ✍️ Evaluasi Mandiri
+                </button>
+                <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full px-4 py-2.5 rounded-xl text-left text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center gap-3">
+                    👨‍🏫 Portal Guru / Rekap
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= PAGE 1: MENU UTAMA (DASHBOARD) ================= -->
+        <section id="page-dashboard" class="space-y-8 animate-fadeIn">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700 text-white p-8 sm:p-10 shadow-xl shadow-sky-500/10">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-sky-100 backdrop-blur-md mb-4">
+                        ✨ Selamat Datang, Detektif Logika!
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3 leading-tight">
+                        Mari Belajar Menyusun Algoritma Dasar Sehari-hari
+                    </h2>
+                    <p class="text-sky-100 text-sm sm:text-base mb-6 leading-relaxed">
+                        Pelajari cara berpikir logis, terstruktur, dan runtut menggunakan kosakata terbatas serta simbol flowchart sederhana untuk menyelesaikan persoalan di sekitarmu!
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="switchTab('materi')" class="px-5 py-3 rounded-xl bg-white text-sky-700 font-bold text-sm hover:bg-sky-50 transition-all duration-200 shadow-md flex items-center gap-2">
+                            🚀 Mulai Belajar Materi
+                        </button>
+                        <button onclick="switchTab('evaluasi')" class="px-5 py-3 rounded-xl bg-sky-800/60 backdrop-blur-md border border-white/20 text-white font-semibold text-sm hover:bg-sky-800/80 transition-all duration-200 flex items-center gap-2">
+                            ✍️ Uji Kemampuan (Kuis)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Capaian Pembelajaran (CP) Summary Card -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2.5 rounded-xl bg-emerald-100 text-emerald-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Tujuan Pembelajaran (TP) Kelas 6</h3>
+                        <p class="text-xs text-slate-500">Kurikulum Merdeka - Element Berpikir Komputasional</p>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-slate-700 text-sm leading-relaxed">
+                    "Peserta didik mampu <strong>menyusun urutan instruksi secara logis dan terstruktur (algoritma dasar)</strong> untuk menyelesaikan persoalan sehari-hari dengan menggunakan <strong>kosakata terbatas atau simbol</strong>."
+                </div>
+            </div>
+
+            <!-- Quick Feature Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1: Materi -->
+                <div onclick="switchTab('materi')" class="group cursor-pointer bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-200">
+                            📖
+                        </div>
+                        <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Modul Pembelajaran</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                        Materi Pembelajaran Algoritma
+                    </h4>
+                    <p class="text-sm text-slate-600 mb-4 line-clamp-2">
+                        Tonton video seru dan pelajari modul lengkap: Pengertian, Kosakata Terbatas, Simbol Flowchart, dan 4 Contoh Kasus Nyata!
+                    </p>
+                    <div class="flex items-center text-xs font-bold text-sky-600 group-hover:gap-2 transition-all">
+                        <span>Buka Materi Sekarang</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </div>
+                </div>
+
+                <!-- Card 2: Evaluasi -->
+                <div onclick="switchTab('evaluasi')" class="group cursor-pointer bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-200">
+                            ✍️
+                        </div>
+                        <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Kuis Mandiri</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors">
+                        Evaluasi Mandiri (5 Soal Acak)
+                    </h4>
+                    <p class="text-sm text-slate-600 mb-4 line-clamp-2">
+                        Uji pemahamanmu! Diambil dari 25 bank soal pilihan. Dapatkan umpan balik dinamis dan nilai otomatis (+20 benar, -5 salah).
+                    </p>
+                    <div class="flex items-center text-xs font-bold text-amber-600 group-hover:gap-2 transition-all">
+                        <span>Kerjakan Kuis Sekarang</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Core Pillars Section -->
+            <div>
+                <h3 class="text-xl font-bold text-slate-900 mb-4">3 Pilar Utama Algoritma Dasar</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-5 bg-white rounded-2xl border border-slate-200/80 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">1</div>
+                        <h5 class="font-bold text-slate-900 mb-1">Instruksi Runtut</h5>
+                        <p class="text-xs text-slate-600">Langkah disusun berurutan dari awal hingga akhir tanpa ada yang terlewat.</p>
+                    </div>
+                    <div class="p-5 bg-white rounded-2xl border border-slate-200/80 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mb-3">2</div>
+                        <h5 class="font-bold text-slate-900 mb-1">Kosakata Terbatas</h5>
+                        <p class="text-xs text-slate-600">Menggunakan kata baku sederhana: Mulai, Langkah, Jika-Maka, Ulangi, Selesai.</p>
+                    </div>
+                    <div class="p-5 bg-white rounded-2xl border border-slate-200/80 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold mb-3">3</div>
+                        <h5 class="font-bold text-slate-900 mb-1">Simbol Flowchart</h5>
+                        <p class="text-xs text-slate-600">Diagram alir visual (Oval, Persegi, Belah Ketupat, Panah) untuk memudahkan pemahaman.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: MATERI PEMBELAJARAN ================= -->
+        <section id="page-materi" class="hidden space-y-8 animate-fadeIn">
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+                <div>
+                    <span class="text-xs font-bold text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Modul Lengkap</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Materi Algoritma Dasar</h2>
+                </div>
+                <button onclick="switchTab('evaluasi')" class="self-start sm:self-auto px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold shadow-sm transition">
+                    Lanjut Ke Evaluasi Kuis ➡️
+                </button>
+            </div>
+
+            <!-- YouTube Video Embed Banner -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="p-2 rounded-xl bg-red-100 text-red-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </span>
+                        
+                    </div>
+                   <button>
+<h3 class="font-bold text-slate-900 text-lg">Video Edukasi: Apa itu Algoritma & Flowchart?</h3>
+                <!-- Responsive Aspect Ratio Video Container -->
+                <div class="relative w-full rounded-2xl overflow-hidden bg-slate-900 shadow-md aspect-video">
+                <iframe width="660" height="315" src="https://www.youtube.com/embed/ig7MCZQthj4?si=Y_y6x2guyaYJWn0F&amp;controls=0&amp;start=5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+              
+
+            <!-- Written Material Content Grid -->
+            <div class="space-y-6">
+
+                <!-- Sub-Section 1: Definisi & Ciri Algoritma -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-sm font-bold">1</span>
+                        Pengertian & Ciri-Ciri Algoritma Dasar
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        <strong>Algoritma</strong> adalah urutan langkah-langkah logis, sistematis, dan terstruktur yang disusun untuk menyelesaikan suatu masalah atau mencapai suatu tujuan tertentu dalam kehidupan sehari-hari.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-sky-50 border border-sky-100">
+                            <h4 class="font-bold text-sky-900 text-sm mb-1">✔ Logis & Terstruktur</h4>
+                            <p class="text-xs text-sky-800">Setiap langkah masuk akal dan urutannya tidak boleh tertukar secara asal.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-50 border border-sky-100">
+                            <h4 class="font-bold text-sky-900 text-sm mb-1">✔ Jelas & Tidak Ambigu</h4>
+                            <p class="text-xs text-sky-800">Setiap instruksi dapat dipahami dengan pasti tanpa membuat bingung.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-50 border border-sky-100">
+                            <h4 class="font-bold text-sky-900 text-sm mb-1">✔ Ada Awal & Akhir</h4>
+                            <p class="text-xs text-sky-800">Memiliki titik dimulai (Mulai) dan titik selesai (Selesai/Tamat).</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-50 border border-sky-100">
+                            <h4 class="font-bold text-sky-900 text-sm mb-1">✔ Efisien</h4>
+                            <p class="text-xs text-sky-800">Menyelesaikan masalah dengan langkah yang paling cepat dan tepat.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-Section 2: Kosakata Terbatas -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-bold">2</span>
+                        Menggunakan Kosakata Terbatas (Kata Kunci Baku)
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Agar instruksi dapat dijalankan dengan baik oleh manusia maupun komputer, kita menggunakan kosakata terbatas berikut:
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-3 py-2 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold">MULAI</span>
+                        <span class="px-3 py-2 rounded-xl bg-blue-100 text-blue-800 text-xs font-bold">LANGKAH 1, 2, 3...</span>
+                        <span class="px-3 py-2 rounded-xl bg-amber-100 text-amber-800 text-xs font-bold">JIKA ... MAKA ...</span>
+                        <span class="px-3 py-2 rounded-xl bg-purple-100 text-purple-800 text-xs font-bold">ULANGI ...</span>
+                        <span class="px-3 py-2 rounded-xl bg-rose-100 text-rose-800 text-xs font-bold">SELESAI</span>
+                    </div>
+                </div>
+
+                <!-- Sub-Section 3: Simbol Flowchart Visual -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-bold">3</span>
+                        Simbol-Simbol Algoritma / Flowchart Dasar
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong>Flowchart (Diagram Alir)</strong> menggunakan bentuk bangun datar untuk menggambarkan alur instruksi:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                        <!-- Oval (Terminator) -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col items-center text-center space-y-3">
+                            <div class="w-32 h-12 rounded-full border-2 border-emerald-500 bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center shadow-sm">
+                                MULAI / SELESAI
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">Oval (Terminator)</h4>
+                                <p class="text-xs text-slate-500 mt-1">Menandai titik awal (Mulai) dan titik akhir (Selesai).</p>
+                            </div>
+                        </div>
+
+                        <!-- Rectangle (Process) -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col items-center text-center space-y-3">
+                            <div class="w-32 h-12 rounded-lg border-2 border-blue-500 bg-blue-50 text-blue-700 font-bold text-xs flex items-center justify-center shadow-sm">
+                                PROSES / TIK
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">Persegi Panjang (Proses)</h4>
+                                <p class="text-xs text-slate-500 mt-1">Menyatakan langkah tindakan atau pengolahan data.</p>
+                            </div>
+                        </div>
+
+                        <!-- Diamond (Decision) -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col items-center text-center space-y-3">
+                            <div class="w-20 h-20 rotate-45 border-2 border-amber-500 bg-amber-50 text-amber-800 font-bold text-[10px] flex items-center justify-center shadow-sm">
+                                <span class="-rotate-45">KONDISI?</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">Belah Ketupat (Keputusan)</h4>
+                                <p class="text-xs text-slate-500 mt-1">Menyatakan pilihan/kondisi (Ya / Tidak, Jika-Maka).</p>
+                            </div>
+                        </div>
+
+                        <!-- Arrow (Flowline) -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col items-center text-center space-y-3">
+                            <div class="w-32 h-12 flex items-center justify-center text-purple-600 font-bold text-2xl">
+                                ➔ ⬇️ ⬆️
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">Panah (Garis Alir)</h4>
+                                <p class="text-xs text-slate-500 mt-1">Menunjukkan arah jalannya urutan instruksi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-Section 4: 4 Contoh Kasus Sehari-Hari -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Praktik Sehari-Hari</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-2">4 Contoh Kasus Algoritma Sehari-Hari</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- Case 1: Teh Manis Warm -->
+                        <div class="p-5 rounded-2xl border border-sky-200 bg-sky-50/50 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">☕</span>
+                                <h4 class="font-bold text-slate-900">1. Algoritma Membuat Teh Manis Warm</h4>
+                            </div>
+                            <ol class="text-xs text-slate-700 space-y-2 list-decimal list-inside font-medium">
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-emerald-600">MULAI</span></li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Masukkan kantong teh celup ke dalam gelas.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Tuangkan air panas secukupnya hingga kecokelatan.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Tambahkan 2 sendok teh gula pasir.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-amber-700">JIKA</span> terlalu manis, <span class="font-bold text-amber-700">MAKA</span> tambahkan sedikit air hangat.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Aduk gula hingga larut sempurna.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-rose-600">SELESAI</span> (Teh manis siap diminum).</li>
+                            </ol>
+                        </div>
+
+                        <!-- Case 2: Mencuci Tangan 6 Langkah -->
+                        <div class="p-5 rounded-2xl border border-emerald-200 bg-emerald-50/50 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">🧼</span>
+                                <h4 class="font-bold text-slate-900">2. Algoritma Mencuci Tangan 6 Langkah</h4>
+                            </div>
+                            <ol class="text-xs text-slate-700 space-y-2 list-decimal list-inside font-medium">
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-emerald-600">MULAI</span></li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Basahi kedua telapak tangan dengan air mengalir.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Tuangkan sabun dan gosok telapak & punggung tangan.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Bersihkan sela-sela jari dan buku jari.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Bilas dengan air bersih mengalir hingga tidak bersabun.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Keringkan tangan menggunakan lap bersih/tisu.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-rose-600">SELESAI</span></li>
+                            </ol>
+                        </div>
+
+                        <!-- Case 3: Menyeberang Jalan -->
+                        <div class="p-5 rounded-2xl border border-amber-200 bg-amber-50/50 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">🚶‍♂️</span>
+                                <h4 class="font-bold text-slate-900">3. Algoritma Menyeberang Jalan dengan Aman</h4>
+                            </div>
+                            <ol class="text-xs text-slate-700 space-y-2 list-decimal list-inside font-medium">
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-emerald-600">MULAI</span></li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Berdiri di tepi trotoar / Zebra Cross.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Menoleh ke kanan, lalu ke kiri, lalu ke kanan lagi.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-amber-700">JIKA</span> ada kendaraan mendekat, <span class="font-bold text-amber-700">MAKA</span> tunggu sampai aman.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-amber-700">JIKA</span> jalanan sudah aman/sepi, <span class="font-bold text-amber-700">MAKA</span> berjalanlah cepat menyeberang.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-rose-600">SELESAI</span></li>
+                            </ol>
+                        </div>
+
+                        <!-- Case 4: Mengemas Tas Sekolah -->
+                        <div class="p-5 rounded-2xl border border-purple-200 bg-purple-50/50 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">🎒</span>
+                                <h4 class="font-bold text-slate-900">4. Algoritma Mengemas Tas Sekolah Sesuai Jadwal</h4>
+                            </div>
+                            <ol class="text-xs text-slate-700 space-y-2 list-decimal list-inside font-medium">
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-emerald-600">MULAI</span></li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Buka jadwal pelajaran untuk hari besok.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Ambil buku pelajaran & alat tulis yang sesuai.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-amber-700">JIKA</span> ada jadwal olahraga, <span class="font-bold text-amber-700">MAKA</span> masukkan baju olahraga.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200">Rapikan semua barang ke dalam tas dan tutup ritsleting.</li>
+                                <li class="p-2 rounded-lg bg-white border border-slate-200"><span class="font-bold text-rose-600">SELESAI</span></li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: EVALUASI & KUIS ================= -->
+        <section id="page-evaluasi" class="hidden space-y-8 animate-fadeIn">
+            <!-- Header Evaluasi -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+                <div>
+                    <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Kuis Mandiri</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Evaluasi Algoritma Dasar</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl font-bold border border-slate-200">
+                        Aturan Skor: +20 Benar, -5 Salah
+                    </span>
+                    <button onclick="resetEvaluationStage()" class="px-3 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition flex items-center gap-1">
+                        🔄 Reset Stage
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Identitas Siswa -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <span class="text-sky-600">👤</span> Identitas Peserta Didik
+                </h3>
+                <p class="text-xs text-slate-500">Isi data diri sebelum mengirimkan jawaban kuis untuk direkap oleh Guru.</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap Siswa *</label>
+                        <input type="text" id="student-name" placeholder="Contoh: Budi Santoso" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Kelas & Nomor Absen *</label>
+                        <input type="text" id="student-class" placeholder="Contoh: 6A / Absen 12" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Sekolah / Kelompok *</label>
+                        <input type="text" id="student-school" placeholder="Contoh: SDN 1 Teladan" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="quiz-container" class="space-y-6">
+                <!-- 5 Questions will be injected dynamically via JavaScript -->
+            </div>
+
+            <!-- Action Buttons & Dynamic Feedback Banner Container -->
+            <div class="space-y-6">
+                <div class="flex flex-wrap items-center gap-4">
+                    <button onclick="submitEvaluation()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white font-bold text-sm shadow-md transition flex items-center gap-2">
+                        🚀 Kirim & Hitung Nilai
+                    </button>
+                    <button onclick="resetEvaluationStage()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm border border-slate-200 transition">
+                        🔄 Acak 5 Soal Baru (Reset Stage)
+                    </button>
+                </div>
+
+                <!-- Dynamic Feedback Banner (Hidden initially) -->
+                <div id="feedback-banner" class="hidden rounded-2xl p-6 transition-all duration-300 border shadow-md space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span id="feedback-icon" class="text-3xl">🎉</span>
+                            <div>
+                                <h4 id="feedback-title" class="text-lg font-bold">Hasil Evaluasi</h4>
+                                <p id="feedback-score-text" class="text-xs font-bold"></p>
+                            </div>
+                        </div>
+                        <span id="feedback-badge" class="px-3 py-1 rounded-full text-xs font-bold"></span>
+                    </div>
+                    <p id="feedback-message" class="text-sm leading-relaxed"></p>
+                    <div id="feedback-detail" class="text-xs pt-2 border-t border-slate-200/60 font-medium"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: PORTAL GURU / ADMIN ================= -->
+        <section id="page-admin" class="hidden space-y-8 animate-fadeIn">
+            <!-- Header Admin -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+                <div>
+                    <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Khusus Guru / Admin</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Portal Rekapitulasi Nilai Siswa</h2>
+                </div>
+                <div id="admin-auth-status" class="hidden flex items-center gap-2">
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-bold">🔓 Sesi Terautentikasi</span>
+                    <button onclick="lockAdminPortal()" class="text-xs text-rose-600 font-bold hover:underline">Kunci Portal</button>
+                </div>
+            </div>
+
+            <!-- Password Gate Card (Shown when locked) -->
+            <div id="admin-login-card" class="max-w-md mx-auto bg-white rounded-3xl p-8 border border-slate-200 shadow-md text-center space-y-4 my-8">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center mx-auto text-2xl font-bold">
+                    🔒
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Masuk Portal Guru</h3>
+                <p class="text-xs text-slate-500">Masukkan kata sandi guru/admin untuk melihat dan mengunduh rekapitulasi nilai siswa.</p>
+
+                <div class="space-y-3">
+                    <input type="password" id="admin-password-input" placeholder="Masukkan Password Guru" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                    <div id="admin-error-msg" class="hidden text-xs text-rose-600 font-bold bg-rose-50 p-2 rounded-xl">
+                        ❌ Kata sandi salah! Coba lagi.
+                    </div>
+                    <button onclick="unlockAdminPortal()" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition">
+                        Buka Akses Portal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Main Dashboard Content (Hidden until password entered) -->
+            <div id="admin-dashboard-content" class="hidden space-y-6">
+
+                <!-- Admin Action Toolbar & Summary Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <span class="text-xs font-bold text-slate-500">Total Pengerjaan</span>
+                        <h4 id="stat-total-submissions" class="text-3xl font-extrabold text-slate-900 mt-1">0</h4>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <span class="text-xs font-bold text-slate-500">Rata-rata Nilai</span>
+                        <h4 id="stat-average-score" class="text-3xl font-extrabold text-sky-600 mt-1">0</h4>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <span class="text-xs font-bold text-slate-500">Nilai Tertinggi</span>
+                        <h4 id="stat-highest-score" class="text-3xl font-extrabold text-emerald-600 mt-1">0</h4>
+                    </div>
+                </div>
+
+                <!-- Export & Table Header -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Data Hasil Evaluasi Siswa</h3>
+                            <p class="text-xs text-slate-500">Tersimpan secara lokal pada sistem ini.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="downloadCSVSpreadsheet()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-2">
+                                📊 Download Spreadsheet (.csv)
+                            </button>
+                            <button onclick="clearAllDataConfirm()" class="px-3 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs border border-rose-200 transition">
+                                🗑️ Hapus Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter / Search Box -->
+                    <div>
+                        <input type="text" id="admin-search-input" onkeyup="filterAdminTable()" placeholder="🔍 Cari nama siswa / kelas..." class="w-full sm:w-72 px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+
+                    <!-- Table Container -->
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3">No</th>
+                                    <th class="p-3">Waktu</th>
+                                    <th class="p-3">Nama Siswa</th>
+                                    <th class="p-3">Kelas / Absen</th>
+                                    <th class="p-3">Sekolah</th>
+                                    <th class="p-3 text-center">Benar (+20)</th>
+                                    <th class="p-3 text-center">Salah (-5)</th>
+                                    <th class="p-3 text-center">Total Skor</th>
+                                    <th class="p-3 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-body" class="divide-y divide-slate-100 font-medium">
+                                <!-- Data rows injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CUSTOM MODAL DIALOG CONTAINER -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full border border-slate-200 shadow-xl space-y-4 text-center">
+            <div id="modal-icon" class="text-4xl mx-auto">⚠️</div>
+            <h3 id="modal-title" class="text-lg font-bold text-slate-900">Pemberitahuan</h3>
+            <p id="modal-body" class="text-xs text-slate-600 leading-relaxed"></p>
+            <div id="modal-actions" class="flex items-center justify-center gap-2 pt-2">
+                <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-sky-600 text-white font-bold text-xs hover:bg-sky-700 transition">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 LMS Algoritma Dasar SD Kelas 6 — Pembelajaran Berpikir Komputasional Logis & Terstruktur.</p>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // 25 QUESTION BANK ON BASIC ALGORITHM & FLOWCHART
+        const QUESTION_BANK = [
+            {
+                id: 1,
+                question: "Apa yang dimaksud dengan algoritma dalam kehidupan sehari-hari?",
+                options: [
+                    "Urutan langkah-langkah logis dan terstruktur untuk menyelesaikan persoalan",
+                    "Kumpulan gambar berwarna untuk menghias halaman buku",
+                    "Bahasa pemrograman asing yang rumit untuk orang dewasa",
+                    "Daftar nilai pelajaran siswa di sekolah"
+                ],
+                answer: 0,
+                explanation: "Algoritma adalah sekumpulan langkah logis dan terstruktur untuk menyelesaikan suatu masalah."
+            },
+            {
+                id: 2,
+                question: "Mengapa urutan langkah dalam suatu algoritma harus tersusun secara logis?",
+                options: [
+                    "Agar langkah-langkahnya terlihat sangat panjang",
+                    "Agar tujuan atau solusi dapat dicapai dengan benar tanpa membingungkan",
+                    "Agar tidak ada orang lain yang bisa membacanya",
+                    "Agar warna diagram alir terlihat bagus"
+                ],
+                answer: 1,
+                explanation: "Urutan logis memastikan hasil yang dicapai konsisten, benar, dan tidak menimbulkan kebingungan."
+            },
+            {
+                id: 3,
+                question: "Simbol flowchart berbentuk Oval (Terminator) digunakan untuk menggambarkan...",
+                options: [
+                    "Langkah tindakan atau proses pengolahan",
+                    "Pengambilan keputusan Jika-Maka",
+                    "Titik awal (MULAI) atau titik akhir (SELESAI) algoritma",
+                    "Garis panah penunjuk arah"
+                ],
+                answer: 2,
+                explanation: "Simbol Oval (Terminator) menandai titik awal (Mulai) dan titik akhir (Selesai) dari diagram alir."
+            },
+            {
+                id: 4,
+                question: "Simbol flowchart berbentuk Persegi Panjang berfungsi untuk menyatakan...",
+                options: [
+                    "Titik awal MULAI program",
+                    "Suatu langkah tindakan atau proses yang dilakukan",
+                    "Pilihan kondisi atau keputusan Ya/Tidak",
+                    "Arah panah aliran instruksi"
+                ],
+                answer: 1,
+                explanation: "Persegi Panjang melambangkan proses atau tindakan kegiatan."
+            },
+            {
+                id: 5,
+                question: "Simbol flowchart berbentuk Belah Ketupat (Decision) digunakan untuk...",
+                options: [
+                    "Menyatakan keputusan atau kondisi (Jika-Maka / Ya-Tidak)",
+                    "Menyatakan kalimat Selesai",
+                    "Menggambar garis lurus",
+                    "Menghitung jumlah halaman"
+                ],
+                answer: 0,
+                explanation: "Belah Ketupat menyatakan keputusan di mana ada percabangan jawaban (Ya atau Tidak)."
+            },
+            {
+                id: 6,
+                question: "Garis panah (Flowline) pada diagram alir (flowchart) berfungsi untuk...",
+                options: [
+                    "Menunjukkan arah aliran atau urutan langkah berikutnya",
+                    "Menghapus langkah yang salah",
+                    "Menuliskan nama siswa",
+                    "Menandai titik MULAI saja"
+                ],
+                answer: 0,
+                explanation: "Garis panah menunjukkan arah alur urutan instruksi berikutnya."
+            },
+            {
+                id: 7,
+                question: "Kosakata terbatas berikut ini yang biasanya digunakan untuk menandai bagian paling akhir dari algoritma adalah...",
+                options: ["MULAI", "LANGKAH 1", "SELESAI", "JIKA"],
+                answer: 2,
+                explanation: "Kosakata 'SELESAI' atau 'TAMAT' digunakan untuk menandai akhir instruksi."
+            },
+            {
+                id: 8,
+                question: "Perhatikan langkah acak berikut: (1) Tuang air panas, (2) Masukkan teh celup ke gelas, (3) Tambahkan gula & aduk. Urutan yang logis untuk membuat teh panas adalah...",
+                options: ["(1) - (3) - (2)", "(2) - (1) - (3)", "(3) - (2) - (1)", "(1) - (2) - (3)"],
+                answer: 1,
+                explanation: "Langkah logis: Masukkan teh celup -> Tuang air panas -> Tambahkan gula & aduk."
+            },
+            {
+                id: 9,
+                question: "Apa akibatnya jika salah satu langkah penting dalam algoritma menyeberang jalan (seperti menoleh kanan-kiri) dihilangkan?",
+                options: [
+                    "Penyeberang jalan akan sampai lebih cepat tanpa kendala",
+                    "Dapat membahayakan keselamatan penyeberang jalan",
+                    "Lampu lalu lintas akan berubah warna otomatis",
+                    "Tidak ada pengaruh apa-apa"
+                ],
+                answer: 1,
+                explanation: "Penghilangan langkah penting akan membuat algoritma tidak aman atau gagal mencapai tujuan."
+            },
+            {
+                id: 10,
+                question: "Dalam algoritma mencuci tangan 6 langkah, tindakan yang dilakukan SEBELUM mengeringkan tangan dengan lap bersih adalah...",
+                options: [
+                    "Memakai sabun cuci tangan",
+                    "Membilas tangan dengan air bersih mengalir hingga busa hilang",
+                    "Mengoleskan hand sanitizer",
+                    "Mengambil kantong teh"
+                ],
+                answer: 1,
+                explanation: "Sebelum dikeringkan, tangan harus dibilas dengan air bersih hingga bebas busa."
+            },
+            {
+                id: 11,
+                question: "Mengapa dalam menyusun algoritma disarankan menggunakan 'kosakata terbatas' yang baku?",
+                options: [
+                    "Agar instruksi mudah dipahami secara pasti dan tidak membingungkan",
+                    "Agar kalimatnya terlihat seperti puisi indah",
+                    "Agar jawaban selalu panjang",
+                    "Agar bisa menggunakan bahasa daerah masing-masing"
+                ],
+                answer: 0,
+                explanation: "Kosakata terbatas menghilangkan keraguan sehingga instruksi dapat diikuti dengan tepat."
+            },
+            {
+                id: 12,
+                question: "Manakah contoh instruksi percabangan (Jika-Maka) saat mengemas tas sekolah?",
+                options: [
+                    "Buka ritsleting tas sekolah",
+                    "JIKA esok ada pelajaran Olahraga, MAKA masukkan baju olahraga",
+                    "Masukkan tempat pensil ke dalam tas",
+                    "Tutup ritsleting tas sekolah"
+                ],
+                answer: 1,
+                explanation: "'JIKA ... MAKA ...' menunjukkan kondisi percabangan berdasarkan jadwal."
+            },
+            {
+                id: 13,
+                question: "Bentuk simbol flowchart apakah yang cocok digunakan untuk instruksi 'Aduk gula hingga larut'?",
+                options: [
+                    "Persegi Panjang (Proses)",
+                    "Oval (Terminator)",
+                    "Belah Ketupat (Keputusan)",
+                    "Segitiga Sama Sisi"
+                ],
+                answer: 0,
+                explanation: "Mengaduk gula adalah kegiatan tindakan/proses, sehingga menggunakan simbol Persegi Panjang."
+            },
+            {
+                id: 14,
+                question: "Struktur algoritma yang melakukan pengulangan suatu langkah sampai kondisi tertentu terpenuhi dinamakan...",
+                options: ["Pengulangan (Looping / Ulangi)", "Penghapusan", "Penghentian", "Pencetakan"],
+                answer: 0,
+                explanation: "Pengulangan (Looping/Ulangi) menjalankan langkah berulang kali sampai kondisi tertentu tercapai."
+            },
+            {
+                id: 15,
+                question: "Manakah yang BUKAN merupakan sifat dari algoritma yang baik?",
+                options: [
+                    "Memiliki instruksi yang jelas",
+                    "Langkah-langkah disusun secara acak dan tidak berurutan",
+                    "Memiliki titik awal dan titik akhir",
+                    "Memberikan hasil akhir yang benar"
+                ],
+                answer: 1,
+                explanation: "Langkah yang acak dan tidak berurutan membuat algoritma gagal dan tidak logis."
+            },
+            {
+                id: 16,
+                question: "Saat memasak mi instan, instruksi 'Rebus air hingga mendidih' termasuk dalam kategori...",
+                options: ["Terminator Awal", "Proses", "Keputusan", "Terminator Akhir"],
+                answer: 1,
+                explanation: "Merebus air adalah tindakan pengolahan (Proses)."
+            },
+            {
+                id: 17,
+                question: "Apabila pada simbol keputusan (Belah Ketupat) jawabannya adalah 'TIDAK', maka alur program akan...",
+                options: [
+                    "Melanjutkan ke langkah alternatif yang ditunjuk panah 'Tidak'",
+                    "Berhenti seketika dan merusak komputer",
+                    "Kembali ke langkah paling pertama secara otomatis",
+                    "Menghapus seluruh file"
+                ],
+                answer: 0,
+                explanation: "Jika kondisi 'Tidak' terpenuhi, alur akan mengikuti cabang panah 'Tidak'."
+            },
+            {
+                id: 18,
+                question: "Apa fungsi utama algoritma dalam pemrograman komputer maupun kehidupan sehari-hari?",
+                options: [
+                    "Membantu menyelesaikan masalah secara terstruktur dan efisien",
+                    "Membuat komputer menjadi cepat panas",
+                    "Mengisi waktu luang tanpa tujuan",
+                    "Menambah biaya listrik rumah"
+                ],
+                answer: 0,
+                explanation: "Fungsi utama algoritma adalah memecahkan masalah secara efisien dan terstruktur."
+            },
+            {
+                id: 19,
+                question: "Urutan logis yang tepat untuk menyalakan komputer belajar adalah...",
+                options: [
+                    "Tancapkan kabel listrik -> Tekan tombol Power CPU -> Tekan tombol Power Monitor -> Tunggu desktop tampil",
+                    "Tekan tombol Power CPU -> Cabut kabel listrik -> Buka aplikasi",
+                    "Tunggu desktop tampil -> Tekan tombol Power CPU",
+                    "Buka aplikasi -> Tancapkan kabel"
+                ],
+                answer: 0,
+                explanation: "Urutan logis menyalakan komputer dimulai dari aliran listrik hingga desktop siap."
+            },
+            {
+                id: 20,
+                question: "Kalimat: 'JIKA hari hujan, MAKA bawa payung; JIKA TIDAK, cukup pakai topi' menggunakan struktur...",
+                options: ["Pengulangan (Looping)", "Kondisional / Percabangan (Jika-Maka)", "Urutan Acak", "Penghentian Total"],
+                answer: 1,
+                explanation: "Kalimat tersebut berisi syarat kondisi (Percabangan/Kondisional)."
+            },
+            {
+                id: 21,
+                question: "Mengapa diagram alir (flowchart) sering digunakan bersama teks algoritma?",
+                options: [
+                    "Karena flowchart menyajikan alur secara visual sehingga lebih mudah dipahami",
+                    "Karena flowchart hanya berisi angka-angka rumit",
+                    "Karena flowchart diwajibkan oleh semua bank",
+                    "Agar kertas menjadi penuh tulisan"
+                ],
+                answer: 0,
+                explanation: "Visualisasi flowchart membuat logika alur program mudah dibayangkan secara rinci."
+            },
+            {
+                id: 22,
+                question: "Dalam algoritma menyeberang jalan di Zebra Cross, apa keputusan yang diambil jika lampu penyeberang berwarna MERAH?",
+                options: [
+                    "Berhenti di tepi jalan dan menunggu hingga lampu berubah menjadi HIJAU",
+                    "Tetap berlari menyeberang jalan raya",
+                    "Mematikan lampu lalu lintas",
+                    "Kembali pulang ke rumah"
+                ],
+                answer: 0,
+                explanation: "Lampu Merah penyeberang berarti dilarang menyeberang; harus menunggu lampu Hijau."
+            },
+            {
+                id: 23,
+                question: "Apa yang dimaksud dengan 'Input' dalam sebuah algoritma?",
+                options: [
+                    "Bahan awal atau data yang dimasukkan untuk diproses",
+                    "Hasil akhir yang dicetak",
+                    "Gambar simbol belah ketupat",
+                    "Pesan kesalahan program"
+                ],
+                answer: 0,
+                explanation: "Input adalah bahan dasar atau data awal yang akan diolah oleh algoritma."
+            },
+            {
+                id: 24,
+                question: "Manakah simbol flowchart yang digunakan untuk mengajukan pertanyaan: 'Apakah rasa teh sudah manis?'",
+                options: ["Belah Ketupat (Decision)", "Persegi Panjang (Proses)", "Oval (Terminator)", "Garis Panah"],
+                answer: 0,
+                explanation: "Pertanyaan kondisi untuk mengecek rasa (Ya/Tidak) digambarkan dengan Belah Ketupat."
+            },
+            {
+                id: 25,
+                question: "Apa hasil akhir (Output) dari algoritma mengemas tas sekolah sesuai jadwal?",
+                options: [
+                    "Tas sekolah yang rapi dan berisi buku pelajaran yang tepat untuk besok",
+                    "Buku pelajaran yang berserakan di meja kamar",
+                    "Pakaian olahraga yang kotor",
+                    "Teh manis yang hangat"
+                ],
+                answer: 0,
+                explanation: "Output adalah kondisi akhir di mana tas sudah terisi buku dengan rapi sesuai jadwal."
+            }
+        ];
+
+        // GLOBAL APP STATE
+        let activeQuestions = [];
+        let studentAnswers = {};
+        let evaluationSubmitted = false;
+        let isAdminAuthenticated = false;
+
+        // ON INITIAL LOAD
+        window.onload = function() {
+            loadRandomQuestions();
+            renderQuiz();
+            loadAdminData();
+        };
+
+        // NAVIGATION SWITCHER
+        function switchTab(tabName) {
+            const tabs = ['dashboard', 'materi', 'evaluasi', 'admin'];
+            tabs.forEach(t => {
+                const pageEl = document.getElementById(`page-${t}`);
+                const navBtn = document.getElementById(`nav-${t}`);
+                
+                if (t === tabName) {
+                    pageEl.classList.remove('hidden');
+                    if (navBtn) {
+                        navBtn.className = "nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-white text-sky-700 shadow-sm border border-slate-200/60";
+                    }
+                } else {
+                    pageEl.classList.add('hidden');
+                    if (navBtn) {
+                        navBtn.className = "nav-btn px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 transition-all duration-200 flex items-center gap-2";
+                    }
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // RANDOM 5 QUESTIONS SELECTION LOGIC
+        function loadRandomQuestions() {
+            // Shuffle array using Fisher-Yates and take first 5
+            const shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
+            activeQuestions = shuffled.slice(0, 5);
+            studentAnswers = {};
+            evaluationSubmitted = false;
+        }
+
+        // RENDER QUIZ QUESTIONS IN EVALUATION TAB
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            activeQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = "bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-4";
+                
+                let optionsHTML = '';
+                q.options.forEach((opt, optIdx) => {
+                    const isChecked = studentAnswers[q.id] === optIdx ? 'checked' : '';
+                    optionsHTML += `
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 hover:bg-sky-50/50 hover:border-sky-300 transition cursor-pointer">
+                            <input type="radio" name="question_${q.id}" value="${optIdx}" ${isChecked} onchange="selectAnswer(${q.id}, ${optIdx})" class="mt-0.5 text-sky-600 focus:ring-sky-500">
+                            <span class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">${String.fromCharCode(65 + optIdx)}. ${escapeHTML(opt)}</span>
+                        </label>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <span class="px-3 py-1 rounded-xl bg-sky-100 text-sky-800 text-xs font-bold">Soal #${index + 1}</span>
+                        <span class="text-[10px] text-slate-400 font-mono">ID Soal: ${q.id}</span>
+                    </div>
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">${escapeHTML(q.question)}</h4>
+                    <div class="space-y-2 pt-1">
+                        ${optionsHTML}
+                    </div>
+                    <div id="explanation-${q.id}" class="hidden p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-medium mt-3">
+                        💡 <strong>Pembahasan:</strong> ${escapeHTML(q.explanation)}
+                    </div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+
+            // Hide feedback banner when reset
+            document.getElementById('feedback-banner').classList.add('hidden');
+        }
+
+        function selectAnswer(questionId, optionIndex) {
+            if (evaluationSubmitted) return;
+            studentAnswers[questionId] = optionIndex;
+        }
+
+        // SUBMIT EVALUATION AND CALCULATE SCORE
+        function submitEvaluation() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value.trim();
+            const schoolInput = document.getElementById('student-school').value.trim();
+
+            if (!nameInput || !classInput || !schoolInput) {
+                showModal('⚠️ Identitas Belum Lengkap', 'Mohon lengkapi Nama Lengkap, Kelas/Absen, dan Nama Sekolah sebelum mengirim evaluasi.');
+                return;
+            }
+
+            const answeredCount = Object.keys(studentAnswers).length;
+            if (answeredCount < 5) {
+                showModal('⚠️ Soal Belum Terjawab Semua', `Kamu baru menjawab ${answeredCount} dari 5 soal. Selesaikan semua soal terlebih dahulu!`);
+                return;
+            }
+
+            evaluationSubmitted = true;
+
+            // Calculate Score with (+20 for Correct, -5 for Incorrect)
+            let correctCount = 0;
+            let incorrectCount = 0;
+
+            activeQuestions.forEach(q => {
+                const userAns = studentAnswers[q.id];
+                if (userAns === q.answer) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+
+                // Show Explanation
+                const expEl = document.getElementById(`explanation-${q.id}`);
+                if (expEl) expEl.classList.remove('hidden');
+            });
+
+            // Raw calculation formula: (Correct * 20) - (Incorrect * 5)
+            let rawScore = (correctCount * 20) - (incorrectCount * 5);
+            if (rawScore < 0) rawScore = 0; // Minimum floor score
+
+            const timestamp = new Date().toLocaleString('id-ID', {
+                day: '2-digit', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            // Save result object to localStorage
+            const newRecord = {
+                id: Date.now(),
+                timestamp: timestamp,
+                name: nameInput,
+                classNo: classInput,
+                school: schoolInput,
+                correct: correctCount,
+                incorrect: incorrectCount,
+                score: rawScore,
+                status: rawScore >= 70 ? 'Tuntas' : 'Perlu Bimbingan'
+            };
+
+            saveToLocalStorage(newRecord);
+
+            // Display Dynamic Feedback Banner referencing Menu & Material concepts
+            displayDynamicFeedback(newRecord);
+
+            // Disable radio buttons
+            const inputs = document.querySelectorAll('#quiz-container input[type="radio"]');
+            inputs.forEach(input => input.disabled = true);
+        }
+
+        // GENERATE DYNAMIC FEEDBACK BANNER BASED ON MATERIAL CONCEPTS
+        function displayDynamicFeedback(record) {
+            const banner = document.getElementById('feedback-banner');
+            const iconEl = document.getElementById('feedback-icon');
+            const titleEl = document.getElementById('feedback-title');
+            const scoreTextEl = document.getElementById('feedback-score-text');
+            const badgeEl = document.getElementById('feedback-badge');
+            const messageEl = document.getElementById('feedback-message');
+            const detailEl = document.getElementById('feedback-detail');
+
+            banner.classList.remove('hidden');
+
+            const score = record.score;
+            scoreTextEl.innerText = `Jawaban Benar: ${record.correct} (+${record.correct * 20} poin) | Salah: ${record.incorrect} (-${record.incorrect * 5} poin) | Total Skor: ${score}/100`;
+
+            if (score >= 90) {
+                banner.className = "rounded-2xl p-6 border border-emerald-300 bg-emerald-50 text-emerald-900 shadow-md space-y-3";
+                iconEl.innerText = "🏆";
+                titleEl.innerText = "Luar Biasa! Detektif Logika Unggul!";
+                badgeEl.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-200 text-emerald-900";
+                badgeEl.innerText = "Sangat Tuntas";
+                messageEl.innerText = `Hebat sekali, ${record.name}! Kamu telah menguasai seluruh konsep algoritma dasar, mulai dari urutan logis kosakata terbatas (MULAI, JIKA-MAKA, SELESAI) hingga simbol flowchart (Oval, Persegi, Belah Ketupat). Langkah pemikiranmu setajam algoritma membuat teh manis hangat dan menyeberang jalan!`;
+            } else if (score >= 70) {
+                banner.className = "rounded-2xl p-6 border border-sky-300 bg-sky-50 text-sky-900 shadow-md space-y-3";
+                iconEl.innerText = "🌟";
+                titleEl.innerText = "Sangat Bagus! Logika Runtut!";
+                badgeEl.className = "px-3 py-1 rounded-full text-xs font-bold bg-sky-200 text-sky-900";
+                badgeEl.innerText = "Tuntas";
+                messageEl.innerText = `Bagus sekali, ${record.name}! Pemahamanmu tentang instruksi logis dan simbol diagram alir sudah sangat terstruktur. Tinjau kembali beberapa pembahasan soal di atas agar nilaimu menjadi 100 sempurna pada sesi berikutnya!`;
+            } else {
+                banner.className = "rounded-2xl p-6 border border-amber-300 bg-amber-50 text-amber-900 shadow-md space-y-3";
+                iconEl.innerText = "💪";
+                titleEl.innerText = "Tetap Semangat & Terus Latihan!";
+                badgeEl.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-200 text-amber-900";
+                badgeEl.innerText = "Perlu Penguatan";
+                messageEl.innerText = `Jangan berkecil hati, ${record.name}! Berpikir algoritma adalah tentang kebiasaan menyusun langkah runtut. Buka kembali **Halaman Materi** untuk mempelajari 4 contoh kasus nyata (seperti 6 langkah mencuci tangan dan mengemas tas) lalu klik 'Reset Stage' untuk mencoba lagi!`;
+            }
+
+            detailEl.innerHTML = `
+                📌 <em>Data hasil evaluasi milik <strong>${escapeHTML(record.name)}</strong> telah tersimpan otomatis ke sistem portal guru.</em>
+            `;
+
+            banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // RESET EVALUATION STAGE
+        function resetEvaluationStage() {
+            loadRandomQuestions();
+            renderQuiz();
+            evaluationSubmitted = false;
+        }
+
+        // LOCAL STORAGE HELPER
+        function saveToLocalStorage(record) {
+            let history = JSON.parse(localStorage.getItem('lms_algoritma_records') || '[]');
+            history.unshift(record); // newest first
+            localStorage.setItem('lms_algoritma_records', JSON.stringify(history));
+            loadAdminData();
+        }
+
+        // ADMIN PORTAL AUTHENTICATION
+        function unlockAdminPortal() {
+            const pwdInput = document.getElementById('admin-password-input').value.trim();
+            const errorMsg = document.getElementById('admin-error-msg');
+
+            // EXACT REQUIRED PASSWORD: "Idiladha"
+            if (pwdInput === "Idiladha") {
+                isAdminAuthenticated = true;
+                errorMsg.classList.add('hidden');
+                document.getElementById('admin-login-card').classList.add('hidden');
+                document.getElementById('admin-dashboard-content').classList.remove('hidden');
+                document.getElementById('admin-auth-status').classList.remove('hidden');
+                loadAdminData();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function lockAdminPortal() {
+            isAdminAuthenticated = false;
+            document.getElementById('admin-password-input').value = '';
+            document.getElementById('admin-login-card').classList.remove('hidden');
+            document.getElementById('admin-dashboard-content').classList.add('hidden');
+            document.getElementById('admin-auth-status').classList.add('hidden');
+        }
+
+        // LOAD AND RENDER ADMIN TABLE
+        function loadAdminData() {
+            const tbody = document.getElementById('admin-table-body');
+            if (!tbody) return;
+
+            const records = JSON.parse(localStorage.getItem('lms_algoritma_records') || '[]');
+            
+            // Stats
+            document.getElementById('stat-total-submissions').innerText = records.length;
+            if (records.length > 0) {
+                const totalSum = records.reduce((acc, curr) => acc + curr.score, 0);
+                const avg = Math.round(totalSum / records.length);
+                const max = Math.max(...records.map(r => r.score));
+                document.getElementById('stat-average-score').innerText = avg;
+                document.getElementById('stat-highest-score').innerText = max;
+            } else {
+                document.getElementById('stat-average-score').innerText = '0';
+                document.getElementById('stat-highest-score').innerText = '0';
+            }
+
+            tbody.innerHTML = '';
+            if (records.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="p-6 text-center text-slate-400 font-medium">
+                            Belum ada data evaluasi siswa yang tersimpan.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            records.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition";
+                
+                const statusBadge = r.status === 'Tuntas' 
+                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Tuntas</span>`
+                    : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Bimbingan</span>`;
+
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-slate-500">${idx + 1}</td>
+                    <td class="p-3 text-slate-500 whitespace-nowrap">${r.timestamp}</td>
+                    <td class="p-3 font-bold text-slate-900">${escapeHTML(r.name)}</td>
+                    <td class="p-3 text-slate-600">${escapeHTML(r.classNo)}</td>
+                    <td class="p-3 text-slate-600">${escapeHTML(r.school)}</td>
+                    <td class="p-3 text-center text-emerald-700 font-bold">${r.correct}</td>
+                    <td class="p-3 text-center text-rose-600 font-bold">${r.incorrect}</td>
+                    <td class="p-3 text-center font-extrabold text-sky-700 text-sm">${r.score}</td>
+                    <td class="p-3 text-center">${statusBadge}</td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // FILTER ADMIN TABLE BY SEARCH INPUT
+        function filterAdminTable() {
+            const query = document.getElementById('admin-search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('#admin-table-body tr');
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // DOWNLOAD SPREADSHEET (.CSV)
+        function downloadCSVSpreadsheet() {
+            const records = JSON.parse(localStorage.getItem('lms_algoritma_records') || '[]');
+
+            if (records.length === 0) {
+                showModal('⚠️ Data Kosong', 'Tidak ada data siswa untuk diunduh.');
+                return;
+            }
+
+            // CSV Headers
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "No,Waktu,Nama Siswa,Kelas dan Absen,Sekolah,Jumlah Benar (+20),Jumlah Salah (-5),Total Skor,Status\n";
+
+            records.forEach((r, idx) => {
+                const nameEsc = `"${r.name.replace(/"/g, '""')}"`;
+                const classEsc = `"${r.classNo.replace(/"/g, '""')}"`;
+                const schoolEsc = `"${r.school.replace(/"/g, '""')}"`;
+                
+                const row = `${idx + 1},"${r.timestamp}",${nameEsc},${classEsc},${schoolEsc},${r.correct},${r.incorrect},${r.score},"${r.status}"`;
+                csvContent += row + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Rekap_Nilai_Algoritma_Kelas6_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // CLEAR ALL DATA CONFIRMATION
+        function clearAllDataConfirm() {
+            if (confirm("Apakah Anda yakin ingin menghapus SELURUH rekap data siswa? Tindakan ini tidak dapat dibatalkan.")) {
+                localStorage.removeItem('lms_algoritma_records');
+                loadAdminData();
+                showModal('🗑️ Berhasil', 'Seluruh data rekap telah dibersihkan.');
+            }
+        }
+
+        // CUSTOM MODAL HELPER
+        function showModal(title, message) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = message;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // ESCAPE HTML HELPER
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+</html>
